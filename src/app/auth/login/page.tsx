@@ -6,16 +6,13 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { authClient } from "@/lib/auth-client";
 
-export default function SignUpPage() {
+export default function LoginPage() {
      const router = useRouter();
 
      const [formData, setFormData] = useState({
-          name: "",
           email: "",
-          image: "",
           password: "",
      });
-     const [agreedToTerms, setAgreedToTerms] = useState(false);
      const [isLoading, setIsLoading] = useState(false);
      const [isGoogleLoading, setIsGoogleLoading] = useState(false);
 
@@ -23,56 +20,33 @@ export default function SignUpPage() {
           setFormData({ ...formData, [e.target.name]: e.target.value });
      };
 
-     const saveUserToDB = async () => {
-          await fetch("http://localhost:5000/api/users", {
-               method: "POST",
-               headers: { "Content-Type": "application/json" },
-               body: JSON.stringify({
-                    name: formData.name,
-                    email: formData.email,
-                    image: formData.image,
-               }),
-          });
-     };
-
      const handleSubmit = async (e: React.FormEvent) => {
           e.preventDefault();
 
-          if (!formData.name || !formData.email || !formData.password || !formData.image) {
+          if (!formData.email || !formData.password) {
                toast.error("Please fill in all fields");
-               return;
-          }
-          if (formData.password.length < 8) {
-               toast.error("Password must be at least 8 characters");
-               return;
-          }
-          if (!agreedToTerms) {
-               toast.error("You must accept the terms");
                return;
           }
 
           setIsLoading(true);
 
-          await authClient.signUp.email({
+          await authClient.signIn.email({
                email: formData.email,
                password: formData.password,
-               name: formData.name,
-               image: formData.image,
                fetchOptions: {
-                    onSuccess: async () => {
-                         await saveUserToDB();
-                         toast.success("Account created successfully!");
-                         router.push("/auth/login");
+                    onSuccess: () => {
+                         toast.success("Welcome back!");
+                         router.push("/dashboard/user");
                     },
                     onError: (ctx) => {
-                         toast.error(ctx.error.message || "Something went wrong. Try again.");
+                         toast.error(ctx.error.message || "Invalid email or password");
                          setIsLoading(false);
                     },
                },
           });
      };
 
-     const handleGoogleSignUp = async () => {
+     const handleGoogleLogin = async () => {
           setIsGoogleLoading(true);
           try {
                await authClient.signIn.social({
@@ -80,7 +54,7 @@ export default function SignUpPage() {
                     callbackURL: "/dashboard/user",
                });
           } catch (err) {
-               toast.error("Google sign up failed. Try again.");
+               toast.error("Google sign in failed. Try again.");
                setIsGoogleLoading(false);
           }
      };
@@ -120,30 +94,30 @@ export default function SignUpPage() {
                          </div>
 
                          <h1 className="text-3xl font-extrabold text-neutral-900 leading-tight mb-4">
-                              Join the movement to fix your neighborhood.
+                              Welcome back to your community.
                          </h1>
                          <p className="text-sm text-neutral-500 leading-relaxed mb-10">
-                              Report issues, track resolutions, and be part of a community that turns complaints into real change.
+                              Log in to track your reports, see what's happening around you, and keep pushing for change.
                          </p>
 
                          <div className="space-y-4">
                               <div className="flex items-center gap-3 bg-white/70 border border-blue-100 rounded-2xl px-4 py-3 hover:bg-white hover:shadow-sm transition-all">
                                    <span className="flex items-center justify-center w-9 h-9 rounded-xl bg-blue-500 text-white flex-shrink-0">
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
-                                             <path d="M12 21s-7-6.2-7-11.2A7 7 0 0 1 19 9.8C19 14.8 12 21 12 21Z" />
-                                             <circle cx="12" cy="9.5" r="2.3" />
-                                        </svg>
-                                   </span>
-                                   <p className="text-sm text-neutral-700 font-medium">Report problems in your exact location</p>
-                              </div>
-                              <div className="flex items-center gap-3 bg-white/70 border border-emerald-100 rounded-2xl px-4 py-3 hover:bg-white hover:shadow-sm transition-all">
-                                   <span className="flex items-center justify-center w-9 h-9 rounded-xl bg-emerald-500 text-white flex-shrink-0">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
                                              <circle cx="12" cy="12" r="9" />
                                              <path d="M12 7v5l3.5 2" />
                                         </svg>
                                    </span>
-                                   <p className="text-sm text-neutral-700 font-medium">Track your report's status live</p>
+                                   <p className="text-sm text-neutral-700 font-medium">Check your report's latest status</p>
+                              </div>
+                              <div className="flex items-center gap-3 bg-white/70 border border-emerald-100 rounded-2xl px-4 py-3 hover:bg-white hover:shadow-sm transition-all">
+                                   <span className="flex items-center justify-center w-9 h-9 rounded-xl bg-emerald-500 text-white flex-shrink-0">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
+                                             <path d="M12 21s-7-6.2-7-11.2A7 7 0 0 1 19 9.8C19 14.8 12 21 12 21Z" />
+                                             <circle cx="12" cy="9.5" r="2.3" />
+                                        </svg>
+                                   </span>
+                                   <p className="text-sm text-neutral-700 font-medium">Report new issues anytime</p>
                               </div>
                               <div className="flex items-center gap-3 bg-white/70 border border-rose-100 rounded-2xl px-4 py-3 hover:bg-white hover:shadow-sm transition-all">
                                    <span className="flex items-center justify-center w-9 h-9 rounded-xl bg-rose-500 text-white flex-shrink-0">
@@ -154,7 +128,7 @@ export default function SignUpPage() {
                                              <path d="M16.5 3.6a3.5 3.5 0 0 1 0 6.8" />
                                         </svg>
                                    </span>
-                                   <p className="text-sm text-neutral-700 font-medium">Join thousands making a difference</p>
+                                   <p className="text-sm text-neutral-700 font-medium">See what your neighbors are reporting</p>
                               </div>
                          </div>
                     </div>
@@ -165,30 +139,16 @@ export default function SignUpPage() {
                     <div className="w-full p-8 sm:p-10">
 
                          <h2 className="text-2xl font-bold text-neutral-900 mb-2">
-                              Create your account
+                              Log in to your account
                          </h2>
                          <p className="text-sm text-neutral-500 mb-8">
-                              Already have an account?{" "}
-                              <Link href="/auth/login" className="font-semibold text-amber-600 hover:text-amber-700">
-                                   Log in
+                              Don't have an account?{" "}
+                              <Link href="/auth/register" className="font-semibold text-amber-600 hover:text-amber-700">
+                                   Sign up
                               </Link>
                          </p>
 
                          <form onSubmit={handleSubmit} className="space-y-4">
-                              <div>
-                                   <label className="block text-xs font-semibold text-neutral-600 mb-1.5">
-                                        Full name
-                                   </label>
-                                   <input
-                                        type="text"
-                                        name="name"
-                                        placeholder="John Doe"
-                                        value={formData.name}
-                                        onChange={handleChange}
-                                        className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm text-neutral-800 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-blue-400/40 focus:border-blue-400 transition-all"
-                                   />
-                              </div>
-
                               <div>
                                    <label className="block text-xs font-semibold text-neutral-600 mb-1.5">
                                         Email address
@@ -199,59 +159,27 @@ export default function SignUpPage() {
                                         placeholder="you@example.com"
                                         value={formData.email}
                                         onChange={handleChange}
-                                        className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm text-neutral-800 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-violet-400/40 focus:border-violet-400 transition-all"
+                                        className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm text-neutral-800 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-blue-400/40 focus:border-blue-400 transition-all"
                                    />
                               </div>
 
                               <div>
-                                   <label className="block text-xs font-semibold text-neutral-600 mb-1.5">
-                                        Profile Image
-                                   </label>
-                                   <input
-                                        type="text"
-                                        name="image"
-                                        placeholder="https://example.com/profile.jpg"
-                                        value={formData.image}
-                                        onChange={handleChange}
-                                        className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm text-neutral-800 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-violet-400/40 focus:border-violet-400 transition-all"
-                                   />
-                              </div>
-
-                              <div>
-                                   <label className="block text-xs font-semibold text-neutral-600 mb-1.5">
-                                        Password
-                                   </label>
+                                   <div className="flex items-center justify-between mb-1.5">
+                                        <label className="block text-xs font-semibold text-neutral-600">
+                                             Password
+                                        </label>
+                                        <Link href="/auth/forgot-password" className="text-xs font-semibold text-amber-600 hover:text-amber-700">
+                                             Forgot password?
+                                        </Link>
+                                   </div>
                                    <input
                                         type="password"
                                         name="password"
-                                        placeholder="Create a password"
+                                        placeholder="Enter your password"
                                         value={formData.password}
                                         onChange={handleChange}
                                         className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm text-neutral-800 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-rose-400/40 focus:border-rose-400 transition-all"
                                    />
-                                   <p className="text-[11px] text-neutral-400 mt-1.5">
-                                        Must be at least 8 characters
-                                   </p>
-                              </div>
-
-                              <div className="flex items-start gap-2.5 pt-1">
-                                   <input
-                                        type="checkbox"
-                                        id="terms"
-                                        checked={agreedToTerms}
-                                        onChange={(e) => setAgreedToTerms(e.target.checked)}
-                                        className="mt-0.5 h-4 w-4 rounded border-neutral-300 text-amber-500 focus:ring-amber-400/40"
-                                   />
-                                   <label htmlFor="terms" className="text-xs text-neutral-500 leading-relaxed">
-                                        I agree to the{" "}
-                                        <Link href="/terms" className="font-semibold text-neutral-700 hover:text-amber-600">
-                                             Terms of Service
-                                        </Link>{" "}
-                                        and{" "}
-                                        <Link href="/privacy" className="font-semibold text-neutral-700 hover:text-amber-600">
-                                             Privacy Policy
-                                        </Link>
-                                   </label>
                               </div>
 
                               <button
@@ -259,7 +187,7 @@ export default function SignUpPage() {
                                    disabled={isLoading}
                                    className="w-full rounded-xl bg-linear-to-l from-[#fe8c00] to-[#f83600] py-3 text-sm font-bold text-white hover:opacity-90 transition-all transform hover:-translate-y-0.5 shadow-md mt-2 disabled:opacity-60 disabled:hover:translate-y-0"
                               >
-                                   {isLoading ? "Creating account..." : "Create account"}
+                                   {isLoading ? "Logging in..." : "Log in"}
                               </button>
                          </form>
 
@@ -271,7 +199,7 @@ export default function SignUpPage() {
 
                          <button
                               type="button"
-                              onClick={handleGoogleSignUp}
+                              onClick={handleGoogleLogin}
                               disabled={isGoogleLoading}
                               className="w-full flex items-center justify-center gap-2 rounded-xl border border-neutral-200 bg-white py-3 text-sm font-semibold text-neutral-700 hover:bg-neutral-50 transition-colors disabled:opacity-60"
                          >
@@ -281,7 +209,7 @@ export default function SignUpPage() {
                                    <path fill="#FBBC05" d="M5.84 14.09A6.6 6.6 0 0 1 5.5 12c0-.73.13-1.43.34-2.09V7.06H2.18A11 11 0 0 0 1 12c0 1.77.43 3.45 1.18 4.94l3.66-2.85z" />
                                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1a11 11 0 0 0-9.82 6.06l3.66 2.85C6.71 7.31 9.14 5.38 12 5.38z" />
                               </svg>
-                              {isGoogleLoading ? "Redirecting..." : "Sign up with Google"}
+                              {isGoogleLoading ? "Redirecting..." : "Log in with Google"}
                          </button>
                     </div>
                </div>

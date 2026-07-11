@@ -1,9 +1,9 @@
 import { betterAuth } from "better-auth";
 import { MongoClient } from "mongodb";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
-const client = new MongoClient("mongodb://localhost:27017/database");
+const client = new MongoClient(process.env.MONGODB_URI as string);
 
-const db = client.db('reports_zone_db');
+const db = client.db("reports_zone_db");
 export const auth = betterAuth({
      //...other options
      emailAndPassword: {
