@@ -10,6 +10,8 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
+
+
 export const metadata: Metadata = {
   title: "Reports Zone",
   description: "Reports Zone is a community-driven platform that connects neighbors to help them resolve their issues.",
@@ -21,6 +23,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    
     <html
       lang="en"
       suppressHydrationWarning
