@@ -214,7 +214,7 @@ export default function BrowseProblemsPage() {
 
                     {/* Reports Grid */}
                     {!isLoading && !error && filteredReports.length > 0 && (
-                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                               {filteredReports.map((report) => {
                                    const status = statusConfig[report.status];
                                    const catColor = categoryColors[report.category] ?? "bg-neutral-500";
@@ -272,9 +272,13 @@ export default function BrowseProblemsPage() {
                                                                       {report.creatorName?.[0]?.toUpperCase() ?? "U"}
                                                                  </span>
                                                             )}
-                                                            <span className="text-xs font-medium text-neutral-600 truncate max-w-[100px]">
-                                                                 {report.creatorName}
-                                                            </span>
+                                                            <div className="flex flex-col leading-tight">
+                                                                 <span className="text-xs font-medium text-neutral-600 truncate max-w-[100px]">
+                                                                      {report.creatorName}
+
+                                                                 </span>
+                                                                 <span className="text-xs text-neutral-400">Id: {report.creatorId}</span>
+                                                            </div>
                                                        </div>
 
                                                        <button className="text-xs font-semibold text-amber-600 hover:text-amber-700">
