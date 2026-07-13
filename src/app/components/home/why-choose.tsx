@@ -104,10 +104,6 @@ export default function WhyChooseUs() {
                                    <p className="relative text-sm text-neutral-600 leading-relaxed">
                                         {item.description}
                                    </p>
-
-                                   <span className={`relative inline-block mt-4 text-xs font-semibold ${item.color.accent}`}>
-                                        0{index + 1}
-                                   </span>
                               </div>
                          ))}
                     </div>
