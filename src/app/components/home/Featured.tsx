@@ -2,8 +2,19 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
+interface Incident {
+     _id?: string;
+     imageUrl?: string;
+     title?: string;
+     category?: string;
+     landmark?: string;
+     upazila?: string;
+     creatorPhoto?: string;
+     creatorName?: string;
+}
+
 export default function FeaturedSection() {
-     const [incidents, setIncidents] = useState([]);
+     const [incidents, setIncidents] = useState<Incident[]>([]);
      const [loading, setLoading] = useState<boolean>(true);
 
      useEffect(() => {
@@ -42,63 +53,68 @@ export default function FeaturedSection() {
 
                     {/* Cards Grid*/}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                         {incidents.slice(0, 3).map((item, index) => (
-                              <div
-                                   key={item._id || index}
-                                   className="relative flex flex-col bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100"
-                              >
-                                   {/* Featured Badge - Strictly on the Top Right */}
-                                   <span className="absolute top-4 right-4 z-10 bg-amber-200 text-amber-700 text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm tracking-wider uppercase">
-                                        Featured
-                                   </span>
+                         {incidents.slice(0, 3).map((item, index) => {
+                              const itemId = item._id || String(index);
+                              const itemTitle = item.title || "Untitled Report";
+                              const itemImage = item.imageUrl || "https://images.unsplash.com/photo-1590674899484-d5640e854abe?q=80&w=500";
 
-                                   {/* Card Image */}
-                                   <div className="relative h-40 w-full overflow-hidden bg-gray-200">
-                                        <img
-                                             src={item.imageUrl}
-                                             alt={item.title}
-                                             className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500"
-                                             loading="lazy"
-                                        />
-                                   </div>
-
-                                   {/* Card Content */}
-                                   <div className="p-6 flex flex-col flex-grow">
-                                        <span className="text-[10px] text-amber-600 uppercase tracking-wide">
-                                             {item.category}
+                              return (
+                                   <div
+                                        key={itemId}
+                                        className="relative flex flex-col bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100"
+                                   >
+                                        {/* Featured Badge - Strictly on the Top Right */}
+                                        <span className="absolute top-4 right-4 z-10 bg-amber-200 text-amber-700 text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm tracking-wider uppercase">
+                                             Featured
                                         </span>
 
-                                        <h3 className="mt-2 text-md font-semibold text-gray-900 line-clamp-1">
-                                             {item.title}
-                                        </h3>
-
-                                        <p className="mt-2 text-[10px] text-gray-500 flex items-center gap-1">
-                                             <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                                             </svg>
-                                             {item.landmark}, {item.upazila}
-                                        </p>
-
-                                        {/* Divider */}
-                                        <hr className="my-4 border-gray-100" />
-
-                                        {/* Creator Info (Footer of the card) */}
-                                        <div className="mt-auto flex items-center gap-3">
+                                        {/* Card Image */}
+                                        <div className="relative h-40 w-full overflow-hidden bg-gray-200">
                                              <img
-                                                  src={item.creatorPhoto}
-                                                  alt={item.creatorName}
-                                                  className="w-8 h-8 rounded-full border border-gray-200 object-cover"
+                                                  src={itemImage}
+                                                  alt={itemTitle}
+                                                  className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500"
+                                                  loading="lazy"
                                              />
-                                             <div className="text-xs">
-                                                  <p className="font-semibold text-gray-700">{item.creatorName}</p>
-                                                  <p className="text-gray-400">Reporter</p>
+                                        </div>
+
+                                        {/* Card Content */}
+                                        <div className="p-6 flex flex-col flex-grow">
+                                             <span className="text-[10px] text-amber-600 uppercase tracking-wide">
+                                                  {item.category || "General"}
+                                             </span>
+
+                                             <h3 className="mt-2 text-md font-semibold text-gray-900 line-clamp-1">
+                                                  {itemTitle}
+                                             </h3>
+
+                                             <p className="mt-2 text-[10px] text-gray-500 flex items-center gap-1">
+                                                  <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                  </svg>
+                                                  {item.landmark || "Unknown Location"}, {item.upazila || ""}
+                                             </p>
+
+                                             {/* Divider */}
+                                             <hr className="my-4 border-gray-100" />
+
+                                             {/* Creator Info (Footer of the card) */}
+                                             <div className="mt-auto flex items-center gap-3">
+                                                  <img
+                                                       src={item.creatorPhoto || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=150"} // placeholder user avatar
+                                                       alt={item.creatorName || "Anonymous"}
+                                                       className="w-8 h-8 rounded-full border border-gray-200 object-cover"
+                                                  />
+                                                  <div className="text-xs">
+                                                       <p className="font-semibold text-gray-700">{item.creatorName || "Anonymous"}</p>
+                                                       <p className="text-gray-400">Reporter</p>
+                                                  </div>
                                              </div>
                                         </div>
                                    </div>
-
-                              </div>
-                         ))}
+                              );
+                         })}
                     </div>
 
                </div>
