@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { authClient } from "@/lib/auth-client";
 import { Pencil, CloudArrowUpIn } from "@gravity-ui/icons";
 import { toast } from "react-toastify";
+import Image from "next/image";
 
 type Report = {
      _id: string;
@@ -165,9 +166,11 @@ export default function ProfilePage() {
                               <div className="flex flex-col sm:flex-row items-center sm:items-end justify-between gap-5 -mt-14 mb-2">
                                    <div className="flex flex-col gap-5 text-center sm:text-left">
                                         {user.image ? (
-                                             <img
+                                             <Image
                                                   src={user.image}
                                                   alt={user.name || "Profile"}
+                                                  width={500}
+                                                  height={500}
                                                   className="w-28 h-28 rounded-2xl border-4 border-white shadow-xl object-cover flex-shrink-0"
                                              />
                                         ) : (

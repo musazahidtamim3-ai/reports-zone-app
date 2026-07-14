@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { ArrowChevronDown, Bars, Xmark, ArrowRightFromSquare } from "@gravity-ui/icons";
 import { authClient, useSession } from "@/lib/auth-client";
-
+import Image from "next/image";
 
 
 export default function Navbar() {
@@ -120,9 +120,11 @@ export default function Navbar() {
                                                   className="flex items-center gap-2 rounded-full pl-1 pr-3 py-1 border border-neutral-200/70 hover:bg-neutral-100 transition-colors"
                                              >
                                                   {user.image ? (
-                                                       <img
+                                                       <Image
                                                             src={user.image}
-                                                            alt={user.name || "User"}
+                                                                 alt={user.name || "User"}
+                                                                 width={500}
+                                                                 height={500}
                                                             className="h-8 w-8 rounded-full object-cover"
                                                        />
                                                   ) : (
