@@ -97,7 +97,7 @@ export default function AboutPage() {
 
                          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                               {coreValues.map((value, index) => {
-                                   const a = accentMap[value.accent];
+                                   const a = accentMap[value.accent as keyof typeof accentMap];
                                    return (
                                         <div
                                              key={index}
