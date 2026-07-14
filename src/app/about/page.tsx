@@ -5,6 +5,13 @@ import Link from "next/link";
 import { Shield, Eye, TriangleUp } from "@gravity-ui/icons";
 import Image from "next/image";
 
+interface Developer {
+     name: string;
+     role: string;
+     image: string;
+     color: string;
+}
+
 export default function AboutPage() {
      const [mounted, setMounted] = useState(false);
 
@@ -12,12 +19,12 @@ export default function AboutPage() {
           setMounted(true);
      }, []);
 
-     const developers = [
-          { name: "Jahidul Islam", role: "Lead Engineer & Project Architect", image: '/jahid.jpeg'},
-          { name: "Nahil Ibna Jamal", role: "Project Manager", image: '/nahila.jpeg'},
-          { name: "Abdullah Al Kafi Shishir", role: "UI/UX Designer", image: '/shishira.jpeg'},
-          { name: "Subrata Das", role: "Frontend Developer", image: '/subrat.jpeg' },
-          { name: "Akib Hossein Mehedi", role: "Backend Developer", image: '/mehedi.jpeg'},
+     const developers: Developer[] = [
+          { name: "Jahidul Islam", role: "Lead Engineer & Project Architect", image: '/jahid.jpeg', color: "blue" },
+          { name: "Nahil Ibna Jamal", role: "Project Manager", image: '/nahila.jpeg', color: "emerald" },
+          { name: "Abdullah Al Kafi Shishir", role: "UI/UX Designer", image: '/shishira.jpeg', color: "violet" },
+          { name: "Subrata Das", role: "Frontend Developer", image: '/subrat.jpeg', color: "amber" },
+          { name: "Akib Hossein Mehedi", role: "Backend Developer", image: '/mehedi.jpeg', color: "rose" },
      ];
 
      const coreValues = [
@@ -139,7 +146,9 @@ export default function AboutPage() {
 
                          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 lg:gap-5">
                               {developers.map((member, index) => {
-                                   const a = accentMap[member.color];
+                                   const colorKey = (member.color || "blue") as keyof typeof accentMap;
+                                   const a = accentMap[colorKey];
+
                                    return (
                                         <div
                                              key={member.name || index}
@@ -154,7 +163,7 @@ export default function AboutPage() {
 
                                              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent" />
 
-                                             <span className={`absolute top-3 left-3 font-stamp text-[10px] font-bold tracking-widest px-2 py-0.5 rounded-full text-white`}>
+                                             <span className={`absolute top-3 left-3 font-stamp text-[10px] font-bold tracking-widest px-2 py-0.5 rounded-full text-white ${a.iconBg}`}>
                                                   {String(index + 1).padStart(2, "0")}
                                              </span>
 
@@ -194,7 +203,7 @@ export default function AboutPage() {
                                    <div className="pt-2 flex justify-center">
                                         <Link
                                              href="/contact"
-                                             className="inline-flex items-center gap-2 rounded-xl bg-linear-to-l from-[#fe8c00] to-[#f83600] px-5 py-2.5 text-xs font-bold text-white hover:opacity-90 transition-all transform hover:-translate-y-0.5 shadow-md"
+                                             className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-l from-[#fe8c00] to-[#f83600] px-5 py-2.5 text-xs font-bold text-white hover:opacity-90 transition-all transform hover:-translate-y-0.5 shadow-md"
                                         >
                                              Get In Touch
                                              <TriangleUp className="h-3.5 w-3.5 rotate-90" />
