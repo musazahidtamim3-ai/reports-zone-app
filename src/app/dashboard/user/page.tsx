@@ -2,6 +2,7 @@
 
 import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import {
      LineChart,
      Line,
@@ -11,54 +12,24 @@ import {
      ResponsiveContainer,
      CartesianGrid,
 } from "recharts";
+type Report = {
+     _id: string;
+     title: string;
+     description: string;
+     category: string;
+     imageUrl: string;
+     division: string;
+     district: string;
+     upazila: string;
+     landmark: string;
+     status: "pending" | "acknowledged" | "resolved";
+     creatorId: string;
+     creatorName: string;
+     creatorPhoto: string | null;
+     createdAt?: string;
+};
 
-const stats = [
-     {
-          label: "Total Reports",
-          value: 24,
-          color: { bg: "bg-blue-50", border: "border-blue-100", iconBg: "bg-blue-500", text: "text-blue-600" },
-          icon: (
-               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
-                    <path d="M4 19.5V6a2 2 0 0 1 2-2h9.5L20 8.5V19.5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z" />
-                    <path d="M8 10h6" />
-                    <path d="M8 14h8" />
-               </svg>
-          ),
-     },
-     {
-          label: "Resolved",
-          value: 15,
-          color: { bg: "bg-emerald-50", border: "border-emerald-100", iconBg: "bg-emerald-500", text: "text-emerald-600" },
-          icon: (
-               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
-                    <path d="m5 13 4 4L19 7" />
-               </svg>
-          ),
-     },
-     {
-          label: "In Progress",
-          value: 6,
-          color: { bg: "bg-amber-50", border: "border-amber-100", iconBg: "bg-amber-500", text: "text-amber-600" },
-          icon: (
-               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
-                    <circle cx="12" cy="12" r="9" />
-                    <path d="M12 7v5l3.5 2" />
-               </svg>
-          ),
-     },
-     {
-          label: "Pending",
-          value: 3,
-          color: { bg: "bg-rose-50", border: "border-rose-100", iconBg: "bg-rose-500", text: "text-rose-600" },
-          icon: (
-               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
-                    <path d="M12 9v4" />
-                    <path d="M12 17h.01" />
-                    <path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z" />
-               </svg>
-          ),
-     },
-];
+
 
 const chartData = [
      { month: "Jan", reports: 3 },
@@ -123,8 +94,89 @@ const quickActions = [
 ];
 
 export default function UserDashboardHome() {
+     const [reports, setReports] = useState<Report[]>([]);
+     const [isLoading, setIsLoading] = useState(true);
+
      const { data: session, isPending } = authClient.useSession();
      const user = session?.user;
+     const userId = session?.user?.id;
+
+     useEffect(() => {     
+               if (!userId) {
+                    setIsLoading(false);
+                    return;
+               }
+     
+               const fetchReports = async () => {
+                    try {
+                         setIsLoading(true);
+                         const res = await fetch(`http://localhost:5000/api/reports/${userId}`);
+                         if (!res.ok) throw new Error("Failed to fetch");
+                         const data = await res.json();
+                         setReports(data);
+                    } catch (err) {
+                         console.error(err);
+                    } finally {
+                         setIsLoading(false);
+                    }
+               };
+     
+               fetchReports();
+          }, [userId]);
+     
+          const summary = {
+               total: reports.length,
+               pending: reports.filter((r) => r.status === "pending").length,
+               acknowledged: reports.filter((r) => r.status === "acknowledged").length,
+               resolved: reports.filter((r) => r.status === "resolved").length,
+     };
+     const stats = [
+          {
+               label: "Total Reports",
+               value: summary.total,
+               color: { bg: "bg-blue-50", border: "border-blue-100", iconBg: "bg-blue-500", text: "text-blue-600" },
+               icon: (
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
+                         <path d="M4 19.5V6a2 2 0 0 1 2-2h9.5L20 8.5V19.5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z" />
+                         <path d="M8 10h6" />
+                         <path d="M8 14h8" />
+                    </svg>
+               ),
+          },
+          {
+               label: "In Progress",
+               value: summary.acknowledged,
+               color: { bg: "bg-amber-50", border: "border-amber-100", iconBg: "bg-amber-500", text: "text-amber-600" },
+               icon: (
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
+                         <circle cx="12" cy="12" r="9" />
+                         <path d="M12 7v5l3.5 2" />
+                    </svg>
+               ),
+          },
+          {
+               label: "Resolved",
+               value: summary.resolved,
+               color: { bg: "bg-emerald-50", border: "border-emerald-100", iconBg: "bg-emerald-500", text: "text-emerald-600" },
+               icon: (
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
+                         <path d="m5 13 4 4L19 7" />
+                    </svg>
+               ),
+          },
+          {
+               label: "Pending",
+               value: summary.pending,
+               color: { bg: "bg-rose-50", border: "border-rose-100", iconBg: "bg-rose-500", text: "text-rose-600" },
+               icon: (
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
+                         <path d="M12 9v4" />
+                         <path d="M12 17h.01" />
+                         <path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z" />
+                    </svg>
+               ),
+          },
+     ];
      return (
           <div>
                {
@@ -149,7 +201,7 @@ export default function UserDashboardHome() {
                                              </p>
                                         </div>
                                         <Link
-                                             href="/reports/new"
+                                             href="/dashboard/user/add-report"
                                              className="inline-flex items-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-bold text-orange-600 hover:bg-white/90 transition-all transform hover:-translate-y-0.5 shadow-md flex-shrink-0"
                                         >
                                              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
@@ -232,9 +284,6 @@ export default function UserDashboardHome() {
                                         </div>
                                    </div>
                               </div>
-
-                              
-
                          </div>)
                }
           </div>

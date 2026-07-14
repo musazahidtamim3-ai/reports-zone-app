@@ -125,33 +125,8 @@ export default function MyReportsPage() {
                          </Link>
                     </div>
 
-                    {/* Summary strip */}
-                    {!isLoading && !error && reports.length > 0 && (
-                         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-                              <div className="bg-white border border-neutral-200/70 rounded-2xl p-4">
-                                   <p className="text-2xl font-extrabold text-neutral-900">{summary.total}</p>
-                                   <p className="text-xs text-neutral-500 mt-0.5">Total Reports</p>
-                              </div>
-                              <div className="bg-rose-50 border border-rose-100 rounded-2xl p-4">
-                                   <p className="text-2xl font-extrabold text-rose-600">{summary.pending}</p>
-                                   <p className="text-xs text-rose-600/80 mt-0.5">Pending</p>
-                              </div>
-                              <div className="bg-blue-50 border border-blue-100 rounded-2xl p-4">
-                                   <p className="text-2xl font-extrabold text-blue-600">{summary.acknowledged}</p>
-                                   <p className="text-xs text-blue-600/80 mt-0.5">Acknowledged</p>
-                              </div>
-                              <div className="bg-emerald-50 border border-emerald-100 rounded-2xl p-4">
-                                   <p className="text-2xl font-extrabold text-emerald-600">{summary.resolved}</p>
-                                   <p className="text-xs text-emerald-600/80 mt-0.5">Resolved</p>
-                              </div>
-                         </div>
-                    )}
-
                     {/* Reports Table */}
                     <div className="bg-white border border-neutral-200/70 rounded-2xl p-6">
-                         <div className="flex items-center justify-between mb-5">
-                              <h3 className="text-base font-bold text-neutral-900">Recent Reports</h3>
-                         </div>
 
                          {(isLoading || isSessionPending) && (
                               <div className="space-y-3">
