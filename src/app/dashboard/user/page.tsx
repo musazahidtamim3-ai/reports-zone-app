@@ -233,50 +233,7 @@ export default function UserDashboardHome() {
                                    </div>
                               </div>
 
-                              {/* Recent Reports Table */}
-                              <div className="bg-white border border-neutral-200/70 rounded-2xl p-6">
-                                   <div className="flex items-center justify-between mb-5">
-                                        <h3 className="text-base font-bold text-neutral-900">Recent Reports</h3>
-                                        <Link href="/reports" className="text-xs font-semibold text-amber-600 hover:text-amber-700">
-                                             View all →
-                                        </Link>
-                                   </div>
-
-                                   <div className="overflow-x-auto">
-                                        <table className="w-full text-left">
-                                             <thead>
-                                                  <tr className="border-b border-neutral-100">
-                                                       <th className="pb-3 text-xs font-semibold text-neutral-400 uppercase tracking-wide">Report</th>
-                                                       <th className="pb-3 text-xs font-semibold text-neutral-400 uppercase tracking-wide">Location</th>
-                                                       <th className="pb-3 text-xs font-semibold text-neutral-400 uppercase tracking-wide">Status</th>
-                                                       <th className="pb-3 text-xs font-semibold text-neutral-400 uppercase tracking-wide">Date</th>
-                                                  </tr>
-                                             </thead>
-                                             <tbody>
-                                                  {recentReports.map((report) => (
-                                                       <tr
-                                                            key={report.id}
-                                                            className="border-b border-neutral-50 last:border-0 hover:bg-neutral-50 transition-colors"
-                                                       >
-                                                            <td className="py-3.5 pr-4">
-                                                                 <p className="text-sm font-semibold text-neutral-900">{report.title}</p>
-                                                                 <p className="text-xs text-neutral-400 mt-0.5">{report.id}</p>
-                                                            </td>
-                                                            <td className="py-3.5 pr-4">
-                                                                 <p className="text-sm text-neutral-600">{report.location}</p>
-                                                            </td>
-                                                            <td className="py-3.5 pr-4">
-                                                                 <span className={`inline-block text-xs font-semibold px-2.5 py-1 rounded-full ${statusStyles[report.status]}`}>
-                                                                      {report.status}
-                                                                 </span>
-                                                            </td>
-                                                            <td className="py-3.5 text-sm text-neutral-500">{report.date}</td>
-                                                       </tr>
-                                                  ))}
-                                             </tbody>
-                                        </table>
-                                   </div>
-                              </div>
+                              
 
                          </div>)
                }
