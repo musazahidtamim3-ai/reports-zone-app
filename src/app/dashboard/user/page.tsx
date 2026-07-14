@@ -69,43 +69,7 @@ const chartData = [
      { month: "Jun", reports: 9 },
 ];
 
-const recentReports = [
-     {
-          id: "RPT-1024",
-          title: "Broken streetlight on Main Road",
-          location: "Agrabad, Chattogram",
-          status: "Resolved",
-          date: "Jul 08, 2026",
-     },
-     {
-          id: "RPT-1023",
-          title: "Garbage not collected for a week",
-          location: "GEC Circle, Chattogram",
-          status: "In Progress",
-          date: "Jul 06, 2026",
-     },
-     {
-          id: "RPT-1022",
-          title: "Waterlogging near bus stand",
-          location: "Nasirabad, Chattogram",
-          status: "Pending",
-          date: "Jul 04, 2026",
-     },
-     {
-          id: "RPT-1021",
-          title: "Open manhole cover, safety risk",
-          location: "Chawkbazar, Chattogram",
-          status: "Resolved",
-          date: "Jun 29, 2026",
-     },
-     {
-          id: "RPT-1020",
-          title: "Illegal parking blocking footpath",
-          location: "Khulshi, Chattogram",
-          status: "In Progress",
-          date: "Jun 25, 2026",
-     },
-];
+
 
 const statusStyles: Record<string, string> = {
      Resolved: "bg-emerald-100 text-emerald-700",
