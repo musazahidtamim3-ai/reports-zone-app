@@ -29,43 +29,19 @@ type Report = {
      createdAt?: string;
 };
 
+const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-
-const chartData = [
-     { month: "Jan", reports: 3 },
-     { month: "Feb", reports: 5 },
-     { month: "Mar", reports: 4 },
-     { month: "Apr", reports: 7 },
-     { month: "May", reports: 6 },
-     { month: "Jun", reports: 9 },
-];
-
-
-
-const statusStyles: Record<string, string> = {
-     Resolved: "bg-emerald-100 text-emerald-700",
-     "In Progress": "bg-amber-100 text-amber-700",
-     Pending: "bg-rose-100 text-rose-700",
-};
+type DailyStat = { _id: { year: number; month: number; day: number }; reports: number };
+type ChartPoint = { day: string; reports: number };
 
 const quickActions = [
      {
           label: "New Report",
-          href: "/reports/new",
+          href: "/dashboard/user/add-report",
           color: "bg-linear-to-l from-[#fe8c00] to-[#f83600] text-white",
           icon: (
                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
                     <path d="M12 5v14M5 12h14" />
-               </svg>
-          ),
-     },
-     {
-          label: "All Reports",
-          href: "/reports",
-          color: "bg-blue-50 text-blue-600 border border-blue-100",
-          icon: (
-               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
-                    <path d="M4 19.5V6a2 2 0 0 1 2-2h9.5L20 8.5V19.5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z" />
                </svg>
           ),
      },
@@ -96,10 +72,47 @@ const quickActions = [
 export default function UserDashboardHome() {
      const [reports, setReports] = useState<Report[]>([]);
      const [isLoading, setIsLoading] = useState(true);
+     const [chartData, setChartData] = useState<ChartPoint[]>([]);
 
      const { data: session, isPending } = authClient.useSession();
      const user = session?.user;
      const userId = session?.user?.id;
+
+     useEffect(() => {
+          if (!userId) return;
+
+          const fetchWeeklyStats = async () => {
+               try {
+                    const res = await fetch(`http://localhost:5000/api/reports/${userId}/weekly-stats`);
+                    const data: DailyStat[] = await res.json();
+                    const last7Days: (ChartPoint & { key: string })[] = [];
+                    const today = new Date();
+
+                    for (let i = 6; i >= 0; i--) {
+                         const d = new Date(today);
+                         d.setDate(today.getDate() - i);
+
+                         last7Days.push({
+                              key: `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`,
+                              day: d.toLocaleDateString("en-US", { weekday: "short" }), 
+                              reports: 0,
+                         });
+                    }
+
+                    data.forEach((stat) => {
+                         const key = `${stat._id.year}-${stat._id.month}-${stat._id.day}`;
+                         const point = last7Days.find((d) => d.key === key);
+                         if (point) point.reports = stat.reports;
+                    });
+
+                    setChartData(last7Days.map(({ key, ...rest }) => rest));
+               } catch (err) {
+                    console.error(err);
+               }
+          };
+
+          fetchWeeklyStats();
+     }, [userId]);
 
      useEffect(() => {     
                if (!userId) {
@@ -238,10 +251,10 @@ export default function UserDashboardHome() {
                                         <div className="flex items-center justify-between mb-6">
                                              <div>
                                                   <h3 className="text-base font-bold text-neutral-900">Reports Over Time</h3>
-                                                  <p className="text-xs text-neutral-500 mt-0.5">Your submitted reports, last 6 months</p>
+                                                  <p className="text-xs text-neutral-500 mt-0.5">Your submitted reports, last 1 week</p>
                                              </div>
                                              <span className="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full">
-                                                  +50% this month
+                                                  +50% this week
                                              </span>
                                         </div>
 
@@ -249,7 +262,7 @@ export default function UserDashboardHome() {
                                              <ResponsiveContainer width="100%" height="100%">
                                                   <LineChart data={chartData}>
                                                        <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                                                       <XAxis dataKey="month" tick={{ fontSize: 12, fill: "#737373" }} axisLine={false} tickLine={false} />
+                                                       <XAxis dataKey="day" tick={{ fontSize: 12, fill: "#737373" }} axisLine={false} tickLine={false} />
                                                        <YAxis tick={{ fontSize: 12, fill: "#737373" }} axisLine={false} tickLine={false} />
                                                        <Tooltip
                                                             contentStyle={{ borderRadius: "12px", border: "1px solid #e5e5e5", fontSize: "12px" }}
