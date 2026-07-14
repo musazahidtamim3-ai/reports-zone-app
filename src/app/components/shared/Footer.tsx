@@ -64,7 +64,7 @@ export default function Footer() {
                               </h4>
                               <ul className="space-y-2 text-xs font-medium text-neutral-500 ">
                                    <li className="flex items-center gap-2">
-                                        <LocationArrow className="text-[#fe8c00]"/> Dhaka, Bangladesh
+                                        <LocationArrow className="text-[#fe8c00]"/> Feni, Bangladesh
                                    </li>
                                    <li className="flex items-center gap-2">
                                         <Envelope className="text-[#fe8c00]" /> support@reportszone.com

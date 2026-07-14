@@ -1,7 +1,7 @@
 const contactInfo = [
      {
           title: "Call Us",
-          detail: "+880 1XXX-XXXXXX",
+          detail: "+880 1234567890",
           color: {
                bg: "bg-blue-50",
                border: "border-blue-100",
@@ -30,7 +30,7 @@ const contactInfo = [
      },
      {
           title: "Visit Us",
-          detail: "Chattogram, Bangladesh",
+          detail: "Feni, Bangladesh",
           color: {
                bg: "bg-violet-50",
                border: "border-violet-100",

@@ -28,7 +28,7 @@ export default function FeaturedSection() {
 
      return (
           <section className="py-10">
-               <div className="max-w-7xl mx-auto px-4">
+               <div className="max-w-7xl mx-auto px-4 lg:px-0">
 
                     {/* Section Header */}
                     <div className="mb-10 text-center md:text-left">

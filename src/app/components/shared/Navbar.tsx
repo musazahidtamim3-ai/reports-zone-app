@@ -6,13 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { ArrowChevronDown, Bars, Xmark, ArrowRightFromSquare } from "@gravity-ui/icons";
 import { authClient, useSession } from "@/lib/auth-client";
 
-const navLinks = [
-     { label: "Home", href: "/" },
-     { label: "Browse Problems", href: "/browse-problems" },
-     { label: "About", href: "/about" },
-     { label: "How It Works", href: "/how-it-works" },
-     { label: "Contact", href: "/contact" },
-];
+
 
 export default function Navbar() {
      const pathname = usePathname();
@@ -20,6 +14,22 @@ export default function Navbar() {
 
      const { data: session, isPending } = useSession();
      const user = session?.user;
+
+     let navLinks;
+
+     {
+          !user ? navLinks = [
+               { label: "Home", href: "/" },
+               { label: "About", href: "/about" },
+               { label: "Contact", href: "/contact" },
+          ] :  navLinks = [
+               { label: "Home", href: "/" },
+               { label: "Browse Problems", href: "/browse-problems" },
+               { label: "About", href: "/about" },
+               { label: "How It Works", href: "/how-it-works" },
+               { label: "Contact", href: "/contact" },
+          ];
+     }
 
      const [isMenuOpen, setIsMenuOpen] = useState(false);
      const [isDropdownOpen, setIsDropdownOpen] = useState(false);

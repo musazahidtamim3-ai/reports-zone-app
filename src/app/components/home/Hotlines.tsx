@@ -69,7 +69,7 @@ export default function EmergencyHotlines() {
      return (
           <section className="relative py-10 overflow-hidden">
 
-               <div className="relative max-w-7xl mx-auto">
+               <div className="relative max-w-7xl mx-auto px-4 lg:px-0">
 
                     {/* Section Header */}
                     <div className="text-center mb-14">
