@@ -52,7 +52,7 @@ export default function MyReportsPage() {
                try {
                     setIsLoading(true);
                     setError(false);
-                    const res = await fetch(`http://localhost:5000/api/reports/${userId}`);
+                    const res = await fetch(`https://reports-zone-server.vercel.app/api/reports/${userId}`);
                     if (!res.ok) throw new Error("Failed to fetch");
                     const data = await res.json();
                     setReports(data);
@@ -79,7 +79,7 @@ export default function MyReportsPage() {
 
           setIsDeleting(true);
           try {
-               const res = await fetch(`http://localhost:5000/api/reports/${reportToDelete._id}`, {
+               const res = await fetch(`https://reports-zone-server.vercel.app/api/reports/${reportToDelete._id}`, {
                     method: "DELETE",
                });
 

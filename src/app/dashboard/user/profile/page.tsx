@@ -37,7 +37,7 @@ export default function ProfilePage() {
           const fetchStats = async () => {
                try {
                     setIsStatsLoading(true);
-                    const res = await fetch(`http://localhost:5000/api/reports/${user.id}`);
+                    const res = await fetch(`https://reports-zone-server.vercel.app/api/reports/${user.id}`);
                     const data = await res.json();
                     setReports(Array.isArray(data) ? data : []);
                } catch (err) {

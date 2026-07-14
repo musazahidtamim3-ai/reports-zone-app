@@ -48,7 +48,7 @@ export default function AddReportPage() {
                     creatorName: user?.name,
                     creatorPhoto: user?.image,
                };
-               const res = await fetch("http://localhost:5000/api/reports", {
+               const res = await fetch("https://reports-zone-server.vercel.app/api/reports", {
                     method: "POST",
                     headers: {
                          "Content-Type": "application/json",

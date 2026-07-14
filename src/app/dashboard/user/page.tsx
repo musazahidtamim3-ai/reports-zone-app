@@ -83,7 +83,7 @@ export default function UserDashboardHome() {
 
           const fetchWeeklyStats = async () => {
                try {
-                    const res = await fetch(`http://localhost:5000/api/reports/${userId}/weekly-stats`);
+                    const res = await fetch(`https://reports-zone-server.vercel.app/api/reports/${userId}/weekly-stats`);
                     const data: DailyStat[] = await res.json();
                     const last7Days: (ChartPoint & { key: string })[] = [];
                     const today = new Date();
@@ -123,7 +123,7 @@ export default function UserDashboardHome() {
                const fetchReports = async () => {
                     try {
                          setIsLoading(true);
-                         const res = await fetch(`http://localhost:5000/api/reports/${userId}`);
+                         const res = await fetch(`https://reports-zone-server.vercel.app/api/reports/${userId}`);
                          if (!res.ok) throw new Error("Failed to fetch");
                          const data = await res.json();
                          setReports(data);

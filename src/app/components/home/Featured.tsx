@@ -9,7 +9,7 @@ export default function FeaturedSection() {
      useEffect(() => {
           const fetchFeaturedData = async () => {
                try {
-                    const response = await fetch('http://localhost:5000/api/reports');
+                    const response = await fetch('https://reports-zone-server.vercel.app/api/reports');
                     const data = await response.json();
                     setIncidents(data);
                } catch (error) {

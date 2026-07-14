@@ -60,7 +60,7 @@ export default function TopContributors() {
      useEffect(() => {
           const fetchTopContributors = async () => {
                try {
-                    const res = await fetch(`http://localhost:5000/api/reports/top-contributors`);
+                    const res = await fetch(`https://reports-zone-server.vercel.app/api/reports/top-contributors`);
                     if (!res.ok) throw new Error("Failed to fetch");
                     const data = await res.json();
                     setContributors(data);

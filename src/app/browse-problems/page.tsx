@@ -55,7 +55,7 @@ export default function BrowseProblemsPage() {
           const fetchReports = async () => {
                try {
                     setIsLoading(true);
-                    const res = await fetch(`http://localhost:5000/api/reports`);
+                    const res = await fetch(`https://reports-zone-server.vercel.app/api/reports`);
                     if (!res.ok) throw new Error("Failed to fetch");
                     const data = await res.json();
                     setReports(data);

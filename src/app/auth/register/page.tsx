@@ -24,7 +24,7 @@ export default function SignUpPage() {
      };
 
      const saveUserToDB = async () => {
-          await fetch("http://localhost:5000/api/users", {
+          await fetch("https://reports-zone-server.vercel.app/api/users", {
                method: "POST",
                headers: { "Content-Type": "application/json" },
                body: JSON.stringify({
