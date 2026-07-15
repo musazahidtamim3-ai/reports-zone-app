@@ -31,13 +31,10 @@ export default function Footer() {
                                    Platform
                               </h4>
                               <ul className="space-y-2">
-                                   {["Home", "Browse Problems", "Public Lessons", "How It Works"].map((item, i) => (
-                                        <li key={i}>
-                                             <Link href={`/${item.toLowerCase().replace(/ /g, "-")}`} className="text-xs font-medium text-neutral-500 hover:text-purple-600 transition-colors">
-                                                  {item}
-                                             </Link>
-                                        </li>
-                                   ))}
+                                   <Link href={'/'}>Home</Link>
+                                   <Link href={'/browse-problems'}>Browse Problems</Link>
+                                   <Link href={'/about'}>About</Link>
+                                   <Link href={'/how-it-works'}>How it works</Link>
                               </ul>
                          </div>
 

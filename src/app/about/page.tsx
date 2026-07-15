@@ -58,6 +58,7 @@ export default function AboutPage() {
           violet: { bg: "bg-violet-50", border: "border-violet-100", iconBg: "bg-violet-500", text: "text-violet-600" },
           rose: { bg: "bg-rose-50", border: "border-rose-100", iconBg: "bg-rose-500", text: "text-rose-600" },
           amber: { bg: "bg-amber-50", border: "border-amber-100", iconBg: "bg-amber-500", text: "text-amber-600" },
+          red: { bg: "bg-red-50", border: "border-red-100", iconBg: "bg-red-500", text: "text-red-600" },
      };
 
      if (!mounted) return null;
@@ -145,7 +146,7 @@ export default function AboutPage() {
                               </p>
                          </div>
 
-                         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 lg:gap-5">
+                         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-5">
                               {developers.map((member, index) => {
                                    const colorKey = (member.color || "blue") as keyof typeof accentMap;
                                    const a = accentMap[colorKey];

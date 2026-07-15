@@ -15,21 +15,19 @@ export default function Navbar() {
      const { data: session, isPending } = useSession();
      const user = session?.user;
 
-     let navLinks;
-
-     {
-          !user ? navLinks = [
+     const navLinks = !user
+          ? [
                { label: "Home", href: "/" },
                { label: "About", href: "/about" },
                { label: "Contact", href: "/contact" },
-          ] :  navLinks = [
+          ]
+          : [
                { label: "Home", href: "/" },
                { label: "Browse Problems", href: "/browse-problems" },
                { label: "About", href: "/about" },
                { label: "How It Works", href: "/how-it-works" },
                { label: "Contact", href: "/contact" },
           ];
-     }
 
      const [isMenuOpen, setIsMenuOpen] = useState(false);
      const [isDropdownOpen, setIsDropdownOpen] = useState(false);
