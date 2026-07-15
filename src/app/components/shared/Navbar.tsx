@@ -45,16 +45,13 @@ export default function Navbar() {
      }, []);
 
      const handleLogout = async () => {
-          setIsDropdownOpen(false);
-          setIsMenuOpen(false);
-          await authClient.signOut({
-               fetchOptions: {
-                    onSuccess: () => {
-                         router.push("/");
-                         router.refresh();
-                    },
-               },
-          });
+          try {
+               await authClient.signOut();
+               router.refresh();
+               router.push("/");
+          } catch (error) {
+               console.error("Logout failed:", error);
+          }
      };
      const initials = user?.name
           ? user.name.trim().split(/\s+/).slice(0, 2).map((n) => n[0]).join("").toUpperCase()

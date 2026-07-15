@@ -30,11 +30,27 @@ export default function Footer() {
                               <h4 className="text-xs font-bold uppercase tracking-widest text-neutral-900 ">
                                    Platform
                               </h4>
-                              <ul className="space-y-2">
-                                   <Link href={'/'}>Home</Link>
-                                   <Link href={'/browse-problems'}>Browse Problems</Link>
-                                   <Link href={'/about'}>About</Link>
-                                   <Link href={'/how-it-works'}>How it works</Link>
+                              <ul className="flex flex-col gap-2 text-sm font-medium text-neutral-500">
+                                   <li>
+                                        <Link href="/" className="transition-colors hover:text-neutral-900">
+                                             Home
+                                        </Link>
+                                   </li>
+                                   <li>
+                                        <Link href="/browse-problems" className="transition-colors hover:text-neutral-900">
+                                             Browse Problems
+                                        </Link>
+                                   </li>
+                                   <li>
+                                        <Link href="/about" className="transition-colors hover:text-neutral-900">
+                                             About
+                                        </Link>
+                                   </li>
+                                   <li>
+                                        <Link href="/how-it-works" className="transition-colors hover:text-neutral-900">
+                                             How it works
+                                        </Link>
+                                   </li>
                               </ul>
                          </div>
 
