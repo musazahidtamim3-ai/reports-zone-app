@@ -169,7 +169,7 @@ export default async function ReportDetailsPage({ params }: PageProps) {
                                    </div>
 
                                    <div className="text-xs font-mono text-neutral-400 bg-neutral-100 px-3 py-1.5 rounded-lg border border-neutral-200/50">
-                                        ID: #{reportData._id ? reportData._id.slice(-6).toUpperCase() : "Unknown"}
+                                        ID: #{reportData._id ? reportData._id.slice(-6).toUpperCase() : "Unknown id"}
                                    </div>
                               </div>
 
