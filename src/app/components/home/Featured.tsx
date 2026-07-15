@@ -7,6 +7,7 @@ interface Incident {
      _id?: string;
      imageUrl?: string;
      title?: string;
+     description?: string;
      category?: string;
      landmark?: string;
      upazila?: string;
@@ -57,6 +58,7 @@ export default function FeaturedSection() {
                          {incidents.slice(0, 3).map((item, index) => {
                               const itemId = item._id || String(index);
                               const itemTitle = item.title || "Untitled Report";
+                              const itemDescription = item.description || "No description provided.";
                               const itemImage = item.imageUrl || "https://images.unsplash.com/photo-1590674899484-d5640e854abe?q=80&w=500";
 
                               return (
@@ -83,15 +85,13 @@ export default function FeaturedSection() {
 
                                         {/* Card Content */}
                                         <div className="p-6 flex flex-col flex-grow">
-                                             <span className="text-[10px] text-amber-600 uppercase tracking-wide">
-                                                  {item.category || "General"}
-                                             </span>
-
-                                             <h3 className="mt-2 text-md font-semibold text-gray-900 line-clamp-1">
+                                             <h3 className="font-bold text-md text-gray-900 line-clamp-1">
                                                   {itemTitle}
                                              </h3>
-
-                                             <p className="mt-2 text-[10px] text-gray-500 flex items-center gap-1">
+                                             <p className="mt-1 text-xs text-gray-500 line-clamp-2">
+                                                  {itemDescription}
+                                             </p>
+                                             <p className="mt-3 text-[10px] text-gray-500 flex items-center gap-1">
                                                   <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />

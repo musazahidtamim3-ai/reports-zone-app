@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useState, useEffect, useMemo } from "react";
 
 type Report = {
@@ -252,7 +253,7 @@ export default function BrowseProblemsPage() {
                                                        {report.description}
                                                   </p>
 
-                                                  <div className="flex items-center gap-1.5 text-xs text-neutral-500 mb-4">
+                                                  <div className="flex items-center gap-1.5 text-[10px] text-neutral-500 mb-4">
                                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" className="h-3.5 w-3.5 flex-shrink-0">
                                                             <path d="M12 21s-7-6.2-7-11.2A7 7 0 0 1 19 9.8C19 14.8 12 21 12 21Z" />
                                                             <circle cx="12" cy="9.5" r="2.3" />
@@ -282,13 +283,15 @@ export default function BrowseProblemsPage() {
                                                                       {report.creatorName}
 
                                                                  </span>
-                                                                 <span className="text-xs text-neutral-400">Id: {report.creatorId}</span>
+                                                                 <span className="text-xs text-neutral-400">Reporter</span>
                                                             </div>
                                                        </div>
 
-                                                       <button className="text-xs font-semibold text-amber-600 hover:text-amber-700">
-                                                            View →
-                                                       </button>
+                                                       <Link href={`/browse-problems/${report._id}`}>
+                                                            <button className="text-xs font-semibold text-amber-600 hover:text-amber-700">
+                                                                 View →
+                                                            </button>
+                                                       </Link>
                                                   </div>
                                              </div>
                                         </div>

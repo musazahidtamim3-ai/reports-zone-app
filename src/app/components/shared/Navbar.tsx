@@ -47,23 +47,20 @@ export default function Navbar() {
 
      const handleLogout = async () => {
           try {
+               setIsDropdownOpen(false);
+               setIsMenuOpen(false);
                await authClient.signOut({
                     fetchOptions: {
                          onSuccess: () => {
-                              setIsDropdownOpen(false);
-                              setIsMenuOpen(false);
-                              toast.success("Successfully logged out!");
-                              router.push("/");
+                              toast.success("Logged out successfully");
+                              router.push("/auth/login");
                               router.refresh();
-                         },
-                         onError: (ctx) => {
-                              toast.error(ctx.error.message || "Logout failed!");
                          }
                     }
                });
-          } catch (error) {
-               console.error("Logout failed:", error);
-               toast.error("Something went wrong!");
+          } catch (err) {
+               toast.error("Failed to logout. Try again.");
+               console.error(err);
           }
      };
 
