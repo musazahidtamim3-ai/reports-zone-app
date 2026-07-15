@@ -25,6 +25,7 @@ export default function AboutPage() {
           { name: "Abdullah Al Kafi Shishir", role: "UI/UX Designer", image: '/shishira.jpeg', color: "violet" },
           { name: "Subrata Das", role: "Frontend Developer", image: '/subrat.jpeg', color: "amber" },
           { name: "Akib Hossein Mehedi", role: "Backend Developer", image: '/mehedi.jpeg', color: "rose" },
+          {name: "Abdul Hannan", role: "Project Tester", image: '/hannan.jpeg', color: 'red'}
      ];
 
      const coreValues = [

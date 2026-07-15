@@ -18,6 +18,7 @@ export default function SignUpPage() {
      const [agreedToTerms, setAgreedToTerms] = useState(false);
      const [isLoading, setIsLoading] = useState(false);
      const [isGoogleLoading, setIsGoogleLoading] = useState(false);
+     const [showPassword, setShowPassword] = useState(false);
 
      const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
           setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -221,14 +222,35 @@ export default function SignUpPage() {
                                    <label className="block text-xs font-semibold text-neutral-600 mb-1.5">
                                         Password
                                    </label>
-                                   <input
-                                        type="password"
-                                        name="password"
-                                        placeholder="Create a password"
-                                        value={formData.password}
-                                        onChange={handleChange}
-                                        className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm text-neutral-800 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-rose-400/40 focus:border-rose-400 transition-all"
-                                   />
+                                   <div className="relative">
+                                        <input
+                                             type={showPassword ? "text" : "password"}
+                                             name="password"
+                                             placeholder="Create a password"
+                                             value={formData.password}
+                                             onChange={handleChange}
+                                             className="w-full rounded-xl border border-neutral-200 bg-white pl-4 pr-11 py-3 text-sm text-neutral-800 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-rose-400/40 focus:border-rose-400 transition-all"
+                                        />
+                                        <button
+                                             type="button"
+                                             onClick={() => setShowPassword((prev) => !prev)}
+                                             className="absolute right-3.5 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-600 transition-colors"
+                                             tabIndex={-1}
+                                        >
+                                             {showPassword ? (
+                                                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" className="h-4.5 w-4.5">
+                                                       <path d="M3 3l18 18" />
+                                                       <path d="M10.58 10.58a2 2 0 0 0 2.83 2.83" />
+                                                       <path d="M9.88 4.24A9.5 9.5 0 0 1 12 4c5 0 9 4 10 8-.3 1.15-.86 2.28-1.6 3.29M6.61 6.61C4.6 7.9 3.1 9.8 2 12c1 4 5 8 10 8 1.35 0 2.62-.29 3.75-.8" />
+                                                  </svg>
+                                             ) : (
+                                                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" className="h-4.5 w-4.5">
+                                                       <path d="M2 12c1-4 5-8 10-8s9 4 10 8c-1 4-5 8-10 8s-9-4-10-8Z" />
+                                                       <circle cx="12" cy="12" r="3" />
+                                                  </svg>
+                                             )}
+                                        </button>
+                                   </div>
                                    <p className="text-[11px] text-neutral-400 mt-1.5">
                                         Must be at least 8 characters
                                    </p>

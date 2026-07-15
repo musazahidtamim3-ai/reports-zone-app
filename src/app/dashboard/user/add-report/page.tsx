@@ -1,6 +1,7 @@
 "use client";
 
 import { authClient } from "@/lib/auth-client";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -197,7 +198,9 @@ export default function AddReportPage() {
                                    {imageUrl && !errors.imageUrl && (
                                         <div className="mt-4 relative rounded-xl overflow-hidden border border-violet-100 bg-violet-50/30">
                                              {!imagePreviewError ? (
-                                                  <img
+                                                  <Image
+                                                       height={500}
+                                                       width={1000}
                                                        src={imageUrl}
                                                        alt="Preview"
                                                        onError={() => setImagePreviewError(true)}

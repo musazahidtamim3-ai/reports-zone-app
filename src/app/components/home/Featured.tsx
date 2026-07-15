@@ -1,4 +1,5 @@
 'use client'
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
@@ -70,9 +71,11 @@ export default function FeaturedSection() {
 
                                         {/* Card Image */}
                                         <div className="relative h-40 w-full overflow-hidden bg-gray-200">
-                                             <img
+                                             <Image
                                                   src={itemImage}
                                                   alt={itemTitle}
+                                                  height={500}
+                                                  width={1000}
                                                   className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500"
                                                   loading="lazy"
                                              />
@@ -101,8 +104,10 @@ export default function FeaturedSection() {
 
                                              {/* Creator Info (Footer of the card) */}
                                              <div className="mt-auto flex items-center gap-3">
-                                                  <img
+                                                  <Image
                                                        src={item.creatorPhoto || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=150"} // placeholder user avatar
+                                                       height={500}
+                                                       width={500}
                                                        alt={item.creatorName || "Anonymous"}
                                                        className="w-8 h-8 rounded-full border border-gray-200 object-cover"
                                                   />

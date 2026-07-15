@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState, useEffect, useMemo } from "react";
 
 type Report = {
@@ -226,9 +227,11 @@ export default function BrowseProblemsPage() {
                                         >
                                              {/* Image */}
                                              <div className="relative h-44 overflow-hidden bg-neutral-100">
-                                                  <img
+                                                  <Image
                                                        src={report.imageUrl}
                                                        alt={report.title}
+                                                       height={500}
+                                                       width={1000}
                                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                                                   />
                                                   <span className={`absolute top-3 left-3 flex items-center gap-1.5 text-[11px] font-bold px-2.5 py-1 rounded-full ${status.bg} ${status.text}`}>
@@ -262,9 +265,11 @@ export default function BrowseProblemsPage() {
                                                   <div className="flex items-center justify-between pt-4 border-t border-neutral-100">
                                                        <div className="flex items-center gap-2">
                                                             {report.creatorPhoto ? (
-                                                                 <img
+                                                                 <Image
                                                                       src={report.creatorPhoto}
                                                                       alt={report.creatorName}
+                                                                      height={500}
+                                                                      width={500}
                                                                       className="h-7 w-7 rounded-full object-cover"
                                                                  />
                                                             ) : (

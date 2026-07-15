@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { toast } from "react-toastify";
 import { Delete } from "@gravity-ui/icons";
+import Image from "next/image";
 
 type Report = {
      _id: string;
@@ -167,7 +168,9 @@ export default function MyReportsPage() {
                                                   >
                                                        <td className="py-3.5 pr-4">
                                                             <div className="flex items-center gap-3">
-                                                                 <img
+                                                                 <Image
+                                                                      height={500}
+                                                                      width={1000}
                                                                       src={report.imageUrl}
                                                                       alt={report.title}
                                                                       className="w-15 h-10 rounded-lg object-cover flex-shrink-0"

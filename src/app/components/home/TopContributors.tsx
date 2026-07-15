@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -136,7 +137,9 @@ export default function TopContributors() {
                                              {/* Avatar */}
                                              <div className={`relative h-20 w-20 rounded-full p-1 border-2 ${style.ring} group-hover:scale-105 transition-transform duration-300`}>
                                                   {user.image ? (
-                                                       <img
+                                                       <Image
+                                                            height={500}
+                                                            width={500}
                                                             src={user.image}
                                                             alt={user.name}
                                                             className="w-full h-full object-cover rounded-full"
