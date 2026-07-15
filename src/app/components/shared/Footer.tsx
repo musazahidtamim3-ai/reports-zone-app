@@ -30,7 +30,7 @@ export default function Footer() {
                               <h4 className="text-xs font-bold uppercase tracking-widest text-neutral-900 ">
                                    Platform
                               </h4>
-                              <ul className="flex flex-col gap-2 text-sm font-medium text-neutral-500">
+                              <ul className="flex flex-col gap-2 text-xs font-medium text-neutral-500">
                                    <li>
                                         <Link href="/" className="transition-colors hover:text-neutral-900">
                                              Home

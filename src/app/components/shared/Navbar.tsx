@@ -6,9 +6,10 @@ import { usePathname, useRouter } from "next/navigation";
 import { ArrowChevronDown, Bars, Xmark, ArrowRightFromSquare } from "@gravity-ui/icons";
 import { authClient, useSession } from "@/lib/auth-client";
 import Image from "next/image";
+import { toast } from "react-toastify";
 
 
-export default function Navbar() {
+export default function Navbar() { 
      const pathname = usePathname();
      const router = useRouter();
 
@@ -46,13 +47,26 @@ export default function Navbar() {
 
      const handleLogout = async () => {
           try {
-               await authClient.signOut();
-               router.refresh();
-               router.push("/");
+               await authClient.signOut({
+                    fetchOptions: {
+                         onSuccess: () => {
+                              setIsDropdownOpen(false);
+                              setIsMenuOpen(false);
+                              toast.success("Successfully logged out!");
+                              router.push("/");
+                              router.refresh();
+                         },
+                         onError: (ctx) => {
+                              toast.error(ctx.error.message || "Logout failed!");
+                         }
+                    }
+               });
           } catch (error) {
                console.error("Logout failed:", error);
+               toast.error("Something went wrong!");
           }
      };
+
      const initials = user?.name
           ? user.name.trim().split(/\s+/).slice(0, 2).map((n) => n[0]).join("").toUpperCase()
           : "U";
@@ -93,8 +107,8 @@ export default function Navbar() {
                                              key={index}
                                              href={item.href}
                                              className={`text-xs font-semibold px-4 py-2 rounded-full transition-all duration-300 ${isActive
-                                                       ? "bg-white text-amber-600 shadow-sm"
-                                                       : "text-neutral-600 hover:text-neutral-900"
+                                                  ? "bg-white text-amber-600 shadow-sm"
+                                                  : "text-neutral-600 hover:text-neutral-900"
                                                   }`}
                                         >
                                              {item.label}
@@ -117,9 +131,9 @@ export default function Navbar() {
                                                   {user.image ? (
                                                        <Image
                                                             src={user.image}
-                                                                 alt={user.name || "User"}
-                                                                 width={500}
-                                                                 height={500}
+                                                            alt={user.name || "User"}
+                                                            width={500}
+                                                            height={500}
                                                             className="h-8 w-8 rounded-full object-cover"
                                                        />
                                                   ) : (
@@ -200,8 +214,8 @@ export default function Navbar() {
                                              href={item.href}
                                              onClick={() => setIsMenuOpen(false)}
                                              className={`block rounded-xl px-4 py-3 text-sm font-semibold transition-all ${isActive
-                                                       ? "text-amber-600 bg-amber-50 border border-amber-100"
-                                                       : "text-neutral-600 hover:bg-neutral-100 border border-transparent"
+                                                  ? "text-amber-600 bg-amber-50 border border-amber-100"
+                                                  : "text-neutral-600 hover:bg-neutral-100 border border-transparent"
                                                   }`}
                                         >
                                              {item.label}
